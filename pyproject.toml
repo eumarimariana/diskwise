@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cleaner"
+dynamic = ["version"]
+description = "Find out what's taking up space on your disk and clean it up safely, file by file."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/eumarimariana/cleaner"
+
+[project.scripts]
+cleaner = "cleaner.__main__:main"
+
+[tool.setuptools]
+packages = ["cleaner"]
+
+[tool.setuptools.package-data]
+cleaner = ["static/*", "static/vendor/*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "cleaner.__version__" }

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cleaner</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect x='2' y='2' width='32' height='32' rx='8.6' fill='%234f46e5'/%3E%3Cg transform='translate(3.6,3.6) scale(1.2)' fill='%23fff'%3E%3Cpath d='M4 5 L10 5 L12 7 L20 7 Q21 7 21 8 L21 17 Q21 18 20 18 L4 18 Q3 18 3 17 L3 6 Q3 5 4 5 Z'/%3E%3C/g%3E%3Cpolygon points='0,-2 0.6,-0.6 2,0 0.6,0.6 0,2 -0.6,0.6 -2,0 -0.6,-0.6' fill='%23fff' transform='translate(29.2,8.4)'/%3E%3C/svg%3E">
+<!-- local libraries (static/vendor), so it works without internet -->
+<script src="/static/vendor/tailwind.js"></script>
+<script src="/static/vendor/chart.umd.min.js"></script>
+<script src="/static/vendor/lucide.min.js"></script>
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] } } } };
+</script>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen">
+
+<header class="sticky top-0 z-20 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
+    <div class="flex items-center gap-2 mr-4">
+      <div class="w-9 h-9 rounded-xl bg-indigo-600 grid place-items-center text-white">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M4 5 L10 5 L12 7 L20 7 Q21 7 21 8 L21 17 Q21 18 20 18 L4 18 Q3 18 3 17 L3 6 Q3 5 4 5 Z"/>
+          <polygon points="0,-1.6 0.5,-0.5 1.6,0 0.5,0.5 0,1.6 -0.5,0.5 -1.6,0 -0.5,-0.5" transform="translate(19,6)"/>
+        </svg>
+      </div>
+      <span class="font-bold text-lg">Cleaner</span>
+    </div>
+    <nav class="flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1">
+      <button data-tab="report" class="tab px-4 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5"><i data-lucide="pie-chart" class="w-4 h-4"></i>Report</button>
+      <button data-tab="explore" class="tab px-4 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5"><i data-lucide="folder-tree" class="w-4 h-4"></i>Explore</button>
+      <button data-tab="clean" class="tab px-4 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5"><i data-lucide="trash-2" class="w-4 h-4"></i>Clean</button>
+      <button data-tab="dups" class="tab px-4 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5"><i data-lucide="copy" class="w-4 h-4"></i>Duplicates</button>
+    </nav>
+    <div class="flex items-center gap-2 flex-1 min-w-[260px]">
+      <div class="relative flex-1">
+        <i data-lucide="folder-search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input id="root" class="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Folder to scan">
+      </div>
+      <button id="scanBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium flex items-center gap-1.5"><i data-lucide="scan-search" class="w-4 h-4"></i>Scan</button>
+    </div>
+    <button id="undoBtn" class="hidden px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium items-center gap-1.5"><i data-lucide="undo-2" class="w-4 h-4"></i>Undo</button>
+    <div id="stat" class="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1.5"></div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-6">
+  <section id="report"></section>
+  <section id="explore" hidden></section>
+  <section id="dups" hidden></section>
+  <section id="clean" hidden>
+    <div class="grid lg:grid-cols-[340px_1fr] gap-5">
+      <aside class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col max-h-[calc(100vh-120px)]">
+        <div class="p-3 border-b border-slate-200 dark:border-slate-800 space-y-2">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input id="folderSearch" class="w-full pl-9 pr-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-sm outline-none" placeholder="Filter folders…">
+          </div>
+          <div id="riskFilter" class="flex flex-wrap gap-1.5"></div>
+        </div>
+        <div id="folders" class="overflow-auto scroll-thin p-2 flex-1"></div>
+      </aside>
+      <div id="viewer" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 min-h-[560px] flex flex-col"></div>
+    </div>
+  </section>
+</main>
+
+<div id="modal" class="fixed inset-0 z-50 bg-black/50 hidden items-center justify-center p-4"></div>
+<div id="toast" class="fixed top-[76px] left-1/2 -translate-x-1/2 z-40 hidden"></div>
+
+<script>const TOKEN = "__TOKEN__";</script>
+<script src="/static/app.js"></script>
+</body>
+</html>
