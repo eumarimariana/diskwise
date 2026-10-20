@@ -1,4 +1,4 @@
-"""Entry point: cleaner [folder] [--port N] [--no-browser]  (or python3 -m cleaner)"""
+"""Entry point: diskwise [folder] [--port N] [--no-browser]  (or python3 -m diskwise)"""
 import argparse
 import threading
 import webbrowser
@@ -11,7 +11,7 @@ from .state import start_scan
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="cleaner", description="See what is taking up space and clean up your folders.")
+    parser = argparse.ArgumentParser(prog="diskwise", description="See what is taking up space and clean up your folders.")
     parser.add_argument("folder", nargs="?", default=str(Path.home()), help="folder to scan (default: your home folder)")
     parser.add_argument("--port", type=int, default=PORT, help=f"local server port (default: {PORT})")
     parser.add_argument("--no-browser", action="store_true", help="don't open the browser automatically")
@@ -22,10 +22,10 @@ def main():
     try:
         server = make_server(args.port)
     except OSError:
-        parser.exit(1, f"Port {args.port} is already in use. Is Cleaner already open? "
+        parser.exit(1, f"Port {args.port} is already in use. Is Diskwise already open? "
                        f"Use --port to pick another one.\n")
     url = f"http://{HOST}:{args.port}/"
-    print(f"Cleaner running at {url}  (Ctrl+C to quit)")
+    print(f"Diskwise running at {url}  (Ctrl+C to quit)")
     if not args.no_browser:
         threading.Timer(0.5, lambda: webbrowser.open(url)).start()
     try:

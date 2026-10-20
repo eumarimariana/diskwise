@@ -1,6 +1,6 @@
 <div align="center">
 
-# Cleaner
+# Diskwise
 
 **See what's filling up your disk and clean it up safely, one file at a time.**
 
@@ -9,13 +9,13 @@
 ![No dependencies](https://img.shields.io/badge/dependencies-none-brightgreen)
 ![MIT License](https://img.shields.io/badge/license-MIT-blue)
 
-<img src="docs/screenshots/report.png" alt="Cleaner report: total space, space by risk level, safe places to clean and the heaviest folders" width="900">
+<img src="docs/screenshots/report.png" alt="Diskwise report: total space, space by risk level, safe places to clean and the heaviest folders" width="900">
 
 </div>
 
 Your disk is full, but where did the space go? And is that folder called `.cache/spotify/Data/f3` safe to delete?
 
-Cleaner scans a folder (your home folder by default) and opens a local page in your browser. It shows **where the space is going**, explains **what each folder is**, and rates every file from **Safe** to **Dangerous**, always with the reason. You decide what goes. Everything you delete goes to the system Trash, and you can undo it from the app.
+Diskwise scans a folder (your home folder by default) and opens a local page in your browser. It shows **where the space is going**, explains **what each folder is**, and rates every file from **Safe** to **Dangerous**, always with the reason. You decide what goes. Everything you delete goes to the system Trash, and you can undo it from the app.
 
 - **Nothing is deleted for good.** Files go to the Trash on Linux, macOS and Windows, and **Undo** brings them back.
 - **Nothing leaves your computer.** It runs locally with no internet connection, no account and no tracking.
@@ -23,19 +23,19 @@ Cleaner scans a folder (your home folder by default) and opens a local page in y
 
 ## Quick start
 
-You need Python 3.10 or newer. Install Cleaner with [pipx](https://pipx.pypa.io) and run it:
+You need Python 3.10 or newer. Install Diskwise with [pipx](https://pipx.pypa.io) and run it:
 
 ```bash
-pipx install git+https://github.com/eumarimariana/cleaner.git
-cleaner
+pipx install git+https://github.com/eumarimariana/diskwise.git
+diskwise
 ```
 
 Your browser opens at `http://127.0.0.1:8765` and the scan starts. To scan another folder, pass it as an argument or type it in the box at the top of the page.
 
 ```bash
-cleaner ~/Downloads        # scan a specific folder
-cleaner --port 9000        # use another port
-cleaner --no-browser       # don't open the browser automatically
+diskwise ~/Downloads        # scan a specific folder
+diskwise --port 9000        # use another port
+diskwise --no-browser       # don't open the browser automatically
 ```
 
 > **macOS:** the first time you delete something, macOS asks whether Terminal may control Finder. Allow it so files go to the Finder Trash (and Finder's "Put Back" works).
@@ -78,7 +78,7 @@ cleaner --no-browser       # don't open the browser automatically
 
 ### Finding duplicates
 
-On the **Duplicates** tab, pick a minimum size and click **Find duplicates**. Cleaner compares sizes first, then the start and end of each file, and finally the full content, so only identical files show up. **Keep the oldest** or **Keep the newest** marks all the extra copies at once. Dangerous files are never marked automatically.
+On the **Duplicates** tab, pick a minimum size and click **Find duplicates**. Diskwise compares sizes first, then the start and end of each file, and finally the full content, so only identical files show up. **Keep the oldest** or **Keep the newest** marks all the extra copies at once. Dangerous files are never marked automatically.
 
 ### Where deleted files go
 
@@ -103,7 +103,7 @@ Deleting anything rated Dangerous always asks for confirmation.
 
 ## Privacy and security
 
-- Everything runs on your computer. Cleaner makes no network requests, and the interface libraries ship with the project.
+- Everything runs on your computer. Diskwise makes no network requests, and the interface libraries ship with the project.
 - The server only listens on `127.0.0.1`, so other devices can't reach it.
 - Each session gets a random token, so other websites open in your browser can't use the API.
 - Only paths inside the scanned folder are accepted.
@@ -111,12 +111,12 @@ Deleting anything rated Dangerous always asks for confirmation.
 
 ## Contributing
 
-Bug reports and ideas are welcome in [Issues](https://github.com/eumarimariana/cleaner/issues). To run Cleaner from the source code:
+Bug reports and ideas are welcome in [Issues](https://github.com/eumarimariana/diskwise/issues). To run Diskwise from the source code:
 
 ```bash
-git clone https://github.com/eumarimariana/cleaner.git
-cd cleaner
-python3 -m cleaner           # on Windows: py -m cleaner
+git clone https://github.com/eumarimariana/diskwise.git
+cd diskwise
+python3 -m diskwise          # on Windows: py -m diskwise
 python3 -m unittest -v       # run the tests
 ```
 
@@ -124,8 +124,8 @@ python3 -m unittest -v       # run the tests
 <summary>Project structure</summary>
 
 ```
-cleaner/
-├── cleaner/
+diskwise/
+├── diskwise/
 │   ├── __main__.py     # command line
 │   ├── server.py       # local HTTP server + JSON API
 │   ├── scanner.py      # disk scan and size totals

@@ -3,7 +3,7 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cleaner"
+name = "diskwise"
 dynamic = ["version"]
 description = "Find out what's taking up space on your disk and clean it up safely, file by file."
 readme = "README.md"
@@ -12,16 +12,16 @@ requires-python = ">=3.10"
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/eumarimariana/cleaner"
+Homepage = "https://github.com/eumarimariana/diskwise"
 
 [project.scripts]
-cleaner = "cleaner.__main__:main"
+diskwise = "diskwise.__main__:main"
 
 [tool.setuptools]
-packages = ["cleaner"]
+packages = ["diskwise"]
 
 [tool.setuptools.package-data]
-cleaner = ["static/*", "static/vendor/*"]
+diskwise = ["static/*", "static/vendor/*"]
 
 [tool.setuptools.dynamic]
-version = { attr = "cleaner.__version__" }
+version = { attr = "diskwise.__version__" }

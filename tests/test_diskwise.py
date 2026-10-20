@@ -5,13 +5,13 @@ import time
 import unittest
 from unittest import mock
 
-from cleaner import actions, duplicates, state as state_mod, trash
-from cleaner.config import HOME
-from cleaner.describe import describe_folder, known_context
-from cleaner.rules import classify
-from cleaner.scanner import scan
-from cleaner.server import static_file
-from cleaner.state import inside, safe_path, state
+from diskwise import actions, duplicates, state as state_mod, trash
+from diskwise.config import HOME
+from diskwise.describe import describe_folder, known_context
+from diskwise.rules import classify
+from diskwise.scanner import scan
+from diskwise.server import static_file
+from diskwise.state import inside, safe_path, state
 
 OLD = time.time() - 900 * 86400
 

@@ -1,4 +1,4 @@
-// Cleaner interface. TOKEN comes from index.html (injected by the server).
+// Diskwise interface. TOKEN comes from index.html (injected by the server).
 const $ = id => document.getElementById(id);
 const api = (path, body) => fetch(path, {
   method: body ? "POST" : "GET",
@@ -557,7 +557,7 @@ function renderDups() {
     body = `<div class="${card} p-10 text-center text-slate-500 dark:text-slate-400 fade-in">
       <i data-lucide="copy" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
       <p class="font-medium">Find repeated files</p>
-      <p class="text-sm mt-1 max-w-md mx-auto">Cleaner compares file contents, not just names. Files with different names but the same content show up too.</p></div>`;
+      <p class="text-sm mt-1 max-w-md mx-auto">Diskwise compares file contents, not just names. Files with different names but the same content show up too.</p></div>`;
   } else if (!groups.length) {
     body = `<div class="${card} p-10 text-center fade-in">
       <div class="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-500/15 grid place-items-center mx-auto mb-4"><i data-lucide="check" class="w-8 h-8 text-emerald-600 dark:text-emerald-400"></i></div>
